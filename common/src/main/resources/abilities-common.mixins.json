@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.abilities.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "client": [
+  ],
+  "mixins": [
+    "MixinLivingEntity",
+    "MixinPlayerEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "abilities",
+  "version": "${version}",
+  "name": "Abilities Mod",
+  "description": "",
+  "authors": [
+    "Sistr"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0",
+  "icon": "assets/abilities/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.abilities.fabric.AbilitiesModFabric"
+    ],
+    "client": [
+      "net.abilities.fabric.AbilitiesModFabric"
+    ]
+  },
+  "mixins": [
+    "abilities.mixins.json",
+    "abilities-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.2.50"
+  }
+}
