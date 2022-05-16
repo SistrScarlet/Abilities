@@ -19,8 +19,7 @@ public class MixinPlayerEntity extends MixinLivingEntity implements HasMoveInput
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(World world, BlockPos pos, float yaw, GameProfile profile, CallbackInfo ci) {
-        AbilityManager.INSTANCE.create("leap", (LivingEntity) (Object)this).ifPresent(this::addAbility);
-        AbilityManager.INSTANCE.create("fly", (LivingEntity) (Object)this).ifPresent(this::addAbility);
+        AbilityManager.INSTANCE.create((LivingEntity) (Object)this).forEach(this::addAbility);
     }
 
     @Override

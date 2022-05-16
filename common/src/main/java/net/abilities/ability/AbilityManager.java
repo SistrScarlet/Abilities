@@ -7,6 +7,7 @@ import org.apache.commons.compress.utils.Lists;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AbilityManager {
     public static final AbilityManager INSTANCE = new AbilityManager();
@@ -14,6 +15,10 @@ public class AbilityManager {
 
     public void register(String name, AbilityFactory factory) {
         factoryMap.put(name, factory);
+    }
+
+    public List<Ability> create(LivingEntity entity) {
+        return factoryMap.entrySet().stream().map(e -> e.getValue().create(e.getKey(), entity)).collect(Collectors.toList());
     }
 
     public Optional<Ability> create(String name, LivingEntity entity) {

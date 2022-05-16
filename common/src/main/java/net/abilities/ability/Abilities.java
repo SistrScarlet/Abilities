@@ -5,6 +5,7 @@ public class Abilities {
     public static void init() {
         register("fly", FlyAbility::new);
         register("leap", LeapAbility::new);
+        register("dodge", DodgeAbility::new);
     }
 
     public static void register(String name, AbilityManager.AbilityFactory factory) {
