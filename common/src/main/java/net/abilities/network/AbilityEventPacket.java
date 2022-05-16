@@ -10,7 +10,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 public class AbilityEventPacket {
-    public static final Identifier ID = new Identifier(AbilitiesMod.MOD_ID, "event");
+    public static final Identifier ID = new Identifier(AbilitiesMod.MOD_ID, "ability_event");
 
     public static void sendC2S(String name) {
         var buf = new PacketByteBuf(Unpooled.buffer());

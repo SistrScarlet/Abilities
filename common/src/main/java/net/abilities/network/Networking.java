@@ -15,6 +15,7 @@ public class Networking {
 
     private static void commonInit() {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, AbilityEventPacket.ID, AbilityEventPacket::receiveC2S);
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, MoveInputPacket.ID, MoveInputPacket::receiveC2S);
     }
 
     private static void clientInit() {
