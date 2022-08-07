@@ -15,12 +15,15 @@ public class FlyAbility extends Ability.Base {
 
     @Override
     public void tick() {
+        var entity = getEntity();
+        if (entity.world.isClient) {
+            return;
+        }
         cool--;
         if (prevEnable != enable) {
-            getEntity().setNoGravity(enable);
+            entity.setNoGravity(enable);
         }
         if (enable) {
-            LivingEntity entity = getEntity();
             if (entity instanceof HasMoveInput input) {
                 Vec3d moveInput = input.getMoveInputVec();
                 float k = 0.9f;
@@ -40,6 +43,10 @@ public class FlyAbility extends Ability.Base {
 
     @Override
     public void event() {
+        var entity = getEntity();
+        if (entity.world.isClient) {
+            return;
+        }
         if (cool < 0) {
             enable = !enable;
             cool = 4;

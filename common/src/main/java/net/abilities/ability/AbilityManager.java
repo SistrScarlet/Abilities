@@ -18,7 +18,9 @@ public class AbilityManager {
     }
 
     public List<Ability> create(LivingEntity entity) {
-        return factoryMap.entrySet().stream().map(e -> e.getValue().create(e.getKey(), entity)).collect(Collectors.toList());
+        return factoryMap.entrySet().stream()
+                .map(e -> e.getValue().create(e.getKey(), entity))
+                .collect(Collectors.toList());
     }
 
     public Optional<Ability> create(String name, LivingEntity entity) {

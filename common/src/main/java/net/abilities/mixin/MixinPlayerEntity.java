@@ -3,6 +3,7 @@ package net.abilities.mixin;
 import com.mojang.authlib.GameProfile;
 import net.abilities.ability.AbilityManager;
 import net.abilities.util.HasMoveInput;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,8 +15,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public class MixinPlayerEntity extends MixinLivingEntity implements HasMoveInput {
+public abstract class MixinPlayerEntity extends MixinLivingEntity implements HasMoveInput {
     private Vec3d moveInput = Vec3d.ZERO;
+
+    public MixinPlayerEntity(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(World world, BlockPos pos, float yaw, GameProfile profile, CallbackInfo ci) {

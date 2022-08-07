@@ -6,6 +6,7 @@ import net.abilities.network.Networking;
 public class ModSetup {
 
     public static void init() {
+        Registration.init();
         Networking.init();
         Abilities.init();
     }

@@ -1,6 +1,7 @@
 package net.abilities.ability;
 
 import net.abilities.util.HasMoveInput;
+import net.abilities.util.LeapCalc;
 import net.minecraft.block.SideShapeType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.*;
@@ -16,12 +17,19 @@ public class DodgeAbility extends Ability.Base {
 
     @Override
     public void tick() {
+        var entity = getEntity();
+        if (entity.world.isClient) {
+            return;
+        }
         cool--;
     }
 
     @Override
     public void event() {
         LivingEntity entity = getEntity();
+        if (entity.world.isClient) {
+            return;
+        }
         if (0 < cool || !entity.isOnGround()) {
             return;
         }
@@ -96,24 +104,9 @@ public class DodgeAbility extends Ability.Base {
             //m / s * 20
             double tick = dodgeFor.length() / 20 * 20;
             double gravity = -0.08f;
-            double kVert = 1 - 0.98f;
-            double kHori = 1 - 0.91f;
-            double kTHori = kHori * tick;
-            double kTVert = kHori * tick / 3;
-            double eKTHori = Math.pow(Math.E, kTHori);
-            double eKTVert = Math.pow(Math.E, kTVert);
-            double mulHori = kHori * kHori * eKTHori;
-            double mulVert = kVert * kVert * eKTVert;
-            double divHori = 1 / (kHori * (eKTHori - 1));
-            double divVert = 1 / (kVert * (eKTVert - 1));
 
-            Vec3d velocity = dodgeFor.
-                    multiply(
-                            mulHori,
-                            mulVert,
-                            mulHori)
-                    .add(0, gravity * (eKTVert * (1 - kTVert) - 1), 0)
-                    .multiply(divHori, divVert, divHori);
+            Vec3d velocity = LeapCalc.calc(dodgeFor, tick, gravity);
+
             if (velocity.y < gravity * 4) {
                 velocity = velocity.subtract(0, velocity.y, 0).add(0, gravity * 4, 0);
             }

@@ -1,9 +1,11 @@
 package net.abilities.setup;
 
 import dev.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import net.abilities.client.AbilitiesKeys;
 import net.abilities.network.MoveInputPacket;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.render.entity.FallingBlockEntityRenderer;
 
 public class ClientSetup {
 
@@ -23,5 +25,6 @@ public class ClientSetup {
                 );
             }
         });
+        EntityRendererRegistry.register(Registration.BLAZE_FIRE, FallingBlockEntityRenderer::new);
     }
 }

@@ -5,6 +5,8 @@
   "client": [
   ],
   "mixins": [
+    "DamageSourceAccessor",
+    "FallingBlockEntityAccessor",
     "MixinLivingEntity",
     "MixinPlayerEntity"
   ],

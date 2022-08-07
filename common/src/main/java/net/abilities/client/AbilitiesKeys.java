@@ -2,8 +2,11 @@ package net.abilities.client;
 
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.abilities.AbilitiesMod;
+import net.abilities.HasAbilities;
+import net.abilities.ability.Ability;
 import net.abilities.ability.AbilityManager;
 import net.abilities.network.AbilityEventPacket;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import org.apache.commons.compress.utils.Lists;
 import org.lwjgl.glfw.GLFW;
@@ -24,9 +27,16 @@ public class AbilitiesKeys {
 
     public static void tick() {
         keys.forEach(keySet -> {
-            if (keySet.keyBinding.isPressed()) {
-                AbilityEventPacket.sendC2S(keySet.name);
+            boolean press = keySet.keyBinding.isPressed();
+            if (press && !keySet.prevPress) {
+                var name = keySet.name;
+                var player = MinecraftClient.getInstance().player;
+                if (player != null) {
+                    ((HasAbilities) player).getAbility_abilities(name).ifPresent(Ability::event);
+                    AbilityEventPacket.sendC2S(name);
+                }
             }
+            keySet.prevPress = press;
         });
     }
 
@@ -34,7 +44,15 @@ public class AbilitiesKeys {
         KeyMappingRegistry.register(keyBinding);
     }
 
-    public record KeySet(String name, KeyBinding keyBinding) {
+    private static class KeySet {
+        public final String name;
+        public final KeyBinding keyBinding;
+        public boolean prevPress = false;
+
+        private KeySet(String name, KeyBinding keyBinding) {
+            this.name = name;
+            this.keyBinding = keyBinding;
+        }
     }
 
 }
